@@ -3,14 +3,17 @@ import { ButtonLink } from "@/components/site/Primitives";
 import { cn } from "@/lib/cn";
 
 const links = [
+  { href: "/work", label: "Work" },
   { href: "/services", label: "Services" },
+  { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
+  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-20 bg-[color:var(--panel)]/95 backdrop-blur-[2px] border-b border-[color:var(--border)]">
+    <header className="sticky top-0 z-20 bg-(--panel)/95 backdrop-blur-[2px] border-b border-(--border)">
       <div className="px-6 py-4 sm:px-10 lg:px-12">
         <div className="flex items-center justify-between gap-6">
           <div className="flex items-center gap-6">
@@ -18,7 +21,7 @@ export function Navbar() {
               href="/"
               className={cn(
                 "text-[12px] font-semibold tracking-[0.28em] uppercase",
-                "text-[color:var(--text)]",
+                "text-(--text)",
               )}
               aria-label="Flinkeo home"
             >
@@ -32,7 +35,7 @@ export function Navbar() {
                   href={l.href}
                   className={cn(
                     "text-[12px] tracking-[0.14em] uppercase",
-                    "text-[color:var(--textSecondary)] hover:text-[color:var(--text)]",
+                    "text-(--textSecondary) hover:text-(--text)",
                     "transition-colors",
                   )}
                 >

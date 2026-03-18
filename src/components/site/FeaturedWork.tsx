@@ -1,5 +1,5 @@
 import { Card, InlineLink, SectionTitle } from "@/components/site/Primitives";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 const work = [
   {
@@ -44,7 +44,7 @@ export function FeaturedWork() {
             key={w.title}
             className={cn(
               "p-4 md:p-5 transition-colors",
-              "hover:border-[color:var(--text)]",
+              "hover:border-[color:var(--text)] hover:bg-[color:var(--panel)] transition-colors",
             )}
           >
             <div className="grid gap-4">

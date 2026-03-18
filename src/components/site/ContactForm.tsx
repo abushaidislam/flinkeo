@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { Card } from "@/components/site/Primitives";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -69,108 +73,73 @@ export function ContactForm() {
     <Card className="p-5">
       <form className="grid gap-4" onSubmit={handleSubmit}>
         <div className="grid gap-1">
-          <label
-            htmlFor="name"
-            className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[color:var(--textMuted)]"
-          >
-            Name *
-          </label>
-          <input
+          <Label htmlFor="name">Name *</Label>
+          <Input
             id="name"
             type="text"
             value={name}
             onChange={(event) => setName(event.target.value)}
-            className="border border-[color:var(--border)] bg-[color:var(--panel)] px-3 py-2 text-[13px] text-[color:var(--text)] outline-none focus-visible:border-[color:var(--accent)]"
           />
         </div>
 
         <div className="grid gap-1">
-          <label
-            htmlFor="email"
-            className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[color:var(--textMuted)]"
-          >
-            Email *
-          </label>
-          <input
+          <Label htmlFor="email">Email *</Label>
+          <Input
             id="email"
             type="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="border border-[color:var(--border)] bg-[color:var(--panel)] px-3 py-2 text-[13px] text-[color:var(--text)] outline-none focus-visible:border-[color:var(--accent)]"
           />
         </div>
 
         <div className="grid gap-1">
-          <label
-            htmlFor="project-type"
-            className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[color:var(--textMuted)]"
-          >
-            Project type
-          </label>
-          <input
+          <Label htmlFor="project-type">Project type</Label>
+          <Input
             id="project-type"
             type="text"
             placeholder="Portfolio, company site, docs, etc."
             value={projectType}
             onChange={(event) => setProjectType(event.target.value)}
-            className="border border-[color:var(--border)] bg-[color:var(--panel)] px-3 py-2 text-[13px] text-[color:var(--text)] outline-none focus-visible:border-[color:var(--accent)]"
           />
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="grid gap-1">
-            <label
-              htmlFor="budget"
-              className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[color:var(--textMuted)]"
-            >
-              Budget
-            </label>
-            <input
+            <Label htmlFor="budget">Budget</Label>
+            <Input
               id="budget"
               type="text"
               placeholder="Approximate range"
               value={budget}
               onChange={(event) => setBudget(event.target.value)}
-              className="border border-[color:var(--border)] bg-[color:var(--panel)] px-3 py-2 text-[13px] text-[color:var(--text)] outline-none focus-visible:border-[color:var(--accent)]"
             />
           </div>
 
           <div className="grid gap-1">
-            <label
-              htmlFor="timeline"
-              className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[color:var(--textMuted)]"
-            >
-              Timeline
-            </label>
-            <input
+            <Label htmlFor="timeline">Timeline</Label>
+            <Input
               id="timeline"
               type="text"
               placeholder="Rough timing"
               value={timeline}
               onChange={(event) => setTimeline(event.target.value)}
-              className="border border-[color:var(--border)] bg-[color:var(--panel)] px-3 py-2 text-[13px] text-[color:var(--text)] outline-none focus-visible:border-[color:var(--accent)]"
             />
           </div>
         </div>
 
         <div className="grid gap-1">
-          <label
-            htmlFor="message"
-            className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[color:var(--textMuted)]"
-          >
-            Project details *
-          </label>
-          <textarea
+          <Label htmlFor="message">Project details *</Label>
+          <Textarea
             id="message"
-            rows={4}
             value={message}
             onChange={(event) => setMessage(event.target.value)}
-            className="border border-[color:var(--border)] bg-[color:var(--panel)] px-3 py-2 text-[13px] text-[color:var(--text)] outline-none focus-visible:border-[color:var(--accent)]"
           />
         </div>
 
         {error ? (
-          <div className="text-[12px] text-[color:var(--accent)]">{error}</div>
+          <div className="text-[12px] text-[color:var(--textSecondary)]">
+            {error}
+          </div>
         ) : null}
 
         {status === "success" ? (
@@ -180,13 +149,12 @@ export function ContactForm() {
         ) : null}
 
         <div>
-          <button
+          <Button
             type="submit"
             disabled={status === "submitting"}
-            className="inline-flex items-center justify-center gap-2 rounded-none border px-4 py-2 text-[12px] font-semibold tracking-[0.16em] uppercase transition-all duration-200 border-[color:var(--text)] bg-[color:var(--text)] text-[color:var(--panel)] hover:-translate-y-[1px] hover:bg-[color:var(--accent)] hover:border-[color:var(--accent)] hover:text-[color:var(--panel)] active:translate-y-0 active:bg-[color:var(--text)] active:border-[color:var(--text)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {status === "submitting" ? "Sending..." : "Send brief"}
-          </button>
+          </Button>
         </div>
       </form>
     </Card>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ButtonLink } from "@/components/site/Primitives";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/work", label: "Work" },
@@ -13,7 +13,7 @@ const links = [
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-20 bg-(--panel)/95 backdrop-blur-[2px] border-b border-(--border)">
+    <header className="sticky top-0 z-20 bg-(--panel)/85 backdrop-blur-md border-b border-(--border) shadow-[0_1px_0_rgba(20,20,20,0.04)]">
       <div className="px-6 py-4 sm:px-10 lg:px-12">
         <div className="flex items-center justify-between gap-6">
           <div className="flex items-center gap-6">
@@ -36,7 +36,7 @@ export function Navbar() {
                   className={cn(
                     "text-[12px] tracking-[0.14em] uppercase",
                     "text-(--textSecondary) hover:text-(--text)",
-                    "transition-colors",
+                    "transition-colors decoration-[color:var(--accent)] underline-offset-[8px] hover:underline",
                   )}
                 >
                   {l.label}

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { HelpCircle } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Card } from "@/components/ui/card";
 
 interface FAQ {
   id: string;
@@ -12,38 +13,6 @@ interface FAQ {
 
 interface FAQAccordionProps {
   faqs: FAQ[];
-}
-
-function FAQItem({ faq }: { faq: FAQ }) {
-  const [isOpen, setIsOpen] = useState(false);
-  
-  return (
-    <div className="border-b border-(--border) last:border-b-0">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-6 flex items-center justify-between gap-4 text-left group"
-        aria-expanded={isOpen}
-      >
-        <span className="text-lg font-medium text-(--text-primary) group-hover:text-(--text-link) transition-colors pr-4">
-          {faq.question}
-        </span>
-        <ChevronDown
-          className={`w-5 h-5 text-(--text-muted) shrink-0 transition-transform duration-300 ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-      <div
-        className={`overflow-hidden transition-all duration-300 ${
-          isOpen ? "max-h-96 pb-6" : "max-h-0"
-        }`}
-      >
-        <p className="text-(--text-secondary) leading-relaxed">
-          {faq.answer}
-        </p>
-      </div>
-    </div>
-  );
 }
 
 export function FAQAccordion({ faqs }: FAQAccordionProps) {
@@ -76,11 +45,16 @@ export function FAQAccordion({ faqs }: FAQAccordionProps) {
           <h3 className="text-sm font-medium text-(--text-muted) uppercase tracking-wider mb-4">
             {category}
           </h3>
-          <div className="bg-(--surface) border border-(--border) rounded-2xl px-6">
-            {groupedFAQs[category].map((faq) => (
-              <FAQItem key={faq.id} faq={faq} />
-            ))}
-          </div>
+          <Card className="px-6">
+            <Accordion type="single" collapsible>
+              {groupedFAQs[category].map((faq) => (
+                <AccordionItem key={faq.id} value={faq.id}>
+                  <AccordionTrigger>{faq.question}</AccordionTrigger>
+                  <AccordionContent>{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </Card>
         </div>
       ))}
     </div>

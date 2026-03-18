@@ -34,10 +34,10 @@ export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) 
   };
   
   return (
-    <section className="py-24 px-6">
-      <div className="max-w-4xl mx-auto">
+    <section className="border-t border-(--border) px-6 py-14 sm:px-10 sm:py-16 lg:px-12 lg:py-20">
+      <div className="mx-auto w-full max-w-[1200px]">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-14">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-(--text-primary) mb-4">
             What Our Clients Say
           </h2>
@@ -47,7 +47,7 @@ export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) 
         </div>
         
         {/* Testimonial Card */}
-        <div className="relative bg-(--surface) border border-(--border) rounded-3xl p-8 md:p-12">
+        <div className="relative bg-(--surface) border border-(--border) rounded-[var(--radiusMd)] shadow-[var(--shadowSm)] p-8 md:p-12 max-w-4xl mx-auto">
           {/* Quote Icon */}
           <div className="absolute top-8 left-8 text-(--text-muted) opacity-20">
             <Quote className="w-12 h-12" />

@@ -40,7 +40,7 @@ export function Ecosystem() {
 
       <div className="grid gap-4 md:grid-cols-2">
         {domains.map((d) => (
-          <Card key={d.host} className="p-5">
+          <Card key={d.host} className="p-5 hover:border-[color:var(--text)] transition-colors">
             <div className="grid gap-3">
               <div className="flex items-start justify-between gap-6">
                 <div className="grid gap-1">

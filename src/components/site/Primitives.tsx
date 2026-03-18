@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { Card as UiCard } from "@/components/ui/card";
 
 type ButtonVariant = "primary" | "secondary" | "ghost";
 
@@ -14,20 +16,14 @@ export function ButtonLink({
   className?: string;
   variant?: ButtonVariant;
 }) {
-  const base =
-    "inline-flex items-center justify-center gap-2 rounded-none border px-4 py-2 text-[12px] font-semibold tracking-[0.16em] uppercase transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--panel)]";
-
-  const styles: Record<ButtonVariant, string> = {
-    primary:
-      "border-[color:var(--text)] bg-[color:var(--panel)] text-[color:var(--text)] hover:-translate-y-[1px] hover:bg-[color:var(--accent)] hover:border-[color:var(--accent)] hover:text-[color:var(--panel)] active:translate-y-0 active:bg-[color:var(--text)] active:border-[color:var(--text)]",
-    secondary:
-      "border-[color:var(--border)] bg-transparent text-[color:var(--text)] hover:-translate-y-[1px] hover:border-[color:var(--text)] hover:bg-[color:var(--card)] active:translate-y-0",
-    ghost:
-      "border-transparent bg-transparent text-[color:var(--textMuted)] hover:-translate-y-[1px] hover:text-[color:var(--text)] hover:border-[color:var(--border)] hover:bg-[color:var(--card)] active:translate-y-0",
-  };
+  const mappedVariant: "default" | "secondary" | "ghost" =
+    variant === "primary" ? "default" : variant;
 
   return (
-    <Link href={href} className={cn(base, styles[variant], className)}>
+    <Link
+      href={href}
+      className={cn(buttonVariants({ variant: mappedVariant }), className)}
+    >
       {children}
     </Link>
   );
@@ -94,15 +90,6 @@ export function Card({
   children: React.ReactNode;
   className?: string;
 }) {
-  return (
-    <div
-      className={cn(
-        "bg-[color:var(--card)] border border-[color:var(--border)]",
-        className,
-      )}
-    >
-      {children}
-    </div>
-  );
+  return <UiCard className={className}>{children}</UiCard>;
 }
 

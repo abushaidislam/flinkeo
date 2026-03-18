@@ -33,22 +33,26 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="px-6 pt-10 pb-12 sm:px-10 sm:pt-12 sm:pb-14 lg:px-12 lg:pt-14 lg:pb-16"
+      className="px-6 pt-12 pb-12 sm:px-10 sm:pt-14 sm:pb-14 lg:px-12 lg:pt-16 lg:pb-16"
     >
-      <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
+      <div className="mx-auto w-full max-w-[1200px]">
+        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
         <div className="grid content-start gap-8">
           <div className="grid gap-5">
             <div className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[color:var(--textMuted)]">
               Modern web studio
             </div>
-            <h1 className="text-[36px] leading-[0.95] font-semibold tracking-[-0.03em] uppercase text-[color:var(--accent)] sm:text-[44px] lg:text-[54px]">
+            <h1 className="text-[color:var(--text)] font-semibold tracking-[-0.035em] leading-[1.02] text-[clamp(40px,5vw,64px)]">
               Minimal digital
               <br />
-              spaces built
+              <span className="inline-block border-b-4 border-[color:var(--accent)] pb-1">
+                spaces
+              </span>{" "}
+              built
               <br />
               with clarity
             </h1>
-            <p className="max-w-[58ch] text-[14px] leading-relaxed text-[color:var(--textSecondary)]">
+            <p className="max-w-[60ch] text-[15px] leading-[1.7] text-[color:var(--textSecondary)]">
               Flinkeo designs and engineers premium websites, portfolios, and
               documentation systems—structured, calm, and precise. Editorial
               composition meets clean architecture. No noise. No templates.
@@ -102,7 +106,7 @@ export function Hero() {
         </div>
 
         <div className="grid content-start gap-4">
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 lg:gap-5">
             <MiniDocCard
               meta="Project File / 01"
               title="Architecture Portfolio System"
@@ -141,6 +145,7 @@ export function Hero() {
               </div>
             </div>
           </Card>
+        </div>
         </div>
       </div>
     </section>

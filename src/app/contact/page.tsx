@@ -2,12 +2,19 @@ import { Frame, PanelSection } from "@/components/site/Frame";
 import { Navbar } from "@/components/site/Navbar";
 import { FinalCta } from "@/components/site/FinalCta";
 import { Footer } from "@/components/site/Footer";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Contact | Flinkeo — Modern Web Systems",
+export const metadata = createPageMetadata({
+  title: "Contact Flinkeo",
   description:
-    "Contact Flinkeo to start a calm, precise, and premium web project tailored to your needs.",
-};
+    "Contact Flinkeo to start a portfolio website, company site, documentation system, or product showcase project.",
+  path: "/contact",
+  keywords: [
+    "contact web design agency",
+    "hire website designer",
+    "start a website project",
+  ],
+});
 
 export default function ContactPage() {
   return (
@@ -24,4 +31,3 @@ export default function ContactPage() {
     </Frame>
   );
 }
-

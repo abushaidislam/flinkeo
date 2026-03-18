@@ -1,10 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Clock, Calendar } from "lucide-react";
+import { ArrowRight, Clock } from "lucide-react";
 import { Frame, PanelSection } from "@/components/site/Frame";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
+import { createPageMetadata } from "@/lib/seo";
 
 interface Article {
   id: string;
@@ -23,40 +24,51 @@ async function getArticles(): Promise<Article[]> {
   const supabase = await createClient();
   const { data } = await supabase
     .from("articles")
-    .select("id, title, slug, excerpt, cover_image, category, tags, published_at, reading_time, featured")
+    .select(
+      "id, title, slug, excerpt, cover_image, category, tags, published_at, reading_time, featured",
+    )
     .eq("published", true)
     .order("published_at", { ascending: false });
-  
+
   return data || [];
 }
 
-export const metadata = {
-  title: "Blog | Flinkeo — Insights on Design & Development",
-  description: "Thoughts on calm design, modern web development, and building digital experiences that last.",
-};
+export const metadata = createPageMetadata({
+  title: "Web Design Insights & Articles",
+  description:
+    "Read practical articles on portfolio websites, company sites, documentation systems, UX structure, and performance-minded web design.",
+  path: "/blog",
+  keywords: [
+    "web design blog",
+    "portfolio website guide",
+    "documentation site articles",
+  ],
+});
 
 export default async function BlogPage() {
   const articles = await getArticles();
-  const featuredArticle = articles.find(a => a.featured);
-  const regularArticles = articles.filter(a => !a.featured || a.id !== featuredArticle?.id);
-  
+  const featuredArticle = articles.find((article) => article.featured);
+  const regularArticles = articles.filter(
+    (article) => !article.featured || article.id !== featuredArticle?.id,
+  );
+
   return (
     <Frame>
       <Navbar />
       <main>
         <PanelSection>
           <div className="max-w-6xl mx-auto">
-            {/* Header */}
             <div className="text-center mb-16">
               <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-(--text-primary) mb-4">
                 Insights & Articles
               </h1>
               <p className="text-xl text-(--text-secondary) max-w-2xl mx-auto">
-                Thoughts on calm design, modern web development, and building digital experiences that last.
+                Practical notes on portfolio websites, company sites,
+                documentation systems, and building digital experiences that
+                stay clear under growth.
               </p>
             </div>
-            
-            {/* Featured Article */}
+
             {featuredArticle && (
               <div className="mb-16">
                 <Link href={`/blog/${featuredArticle.slug}`} className="group block">
@@ -64,7 +76,7 @@ export default async function BlogPage() {
                     <div className="relative aspect-16/10 rounded-2xl overflow-hidden bg-(--surface)">
                       <Image
                         src={featuredArticle.cover_image}
-                        alt={featuredArticle.title}
+                        alt={`${featuredArticle.title} article cover`}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
@@ -94,8 +106,7 @@ export default async function BlogPage() {
                 </Link>
               </div>
             )}
-            
-            {/* Articles Grid */}
+
             {regularArticles.length > 0 ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {regularArticles.map((article) => (
@@ -108,7 +119,7 @@ export default async function BlogPage() {
                       <div className="relative aspect-16/10 rounded-2xl overflow-hidden bg-(--surface)">
                         <Image
                           src={article.cover_image}
-                          alt={article.title}
+                          alt={`${article.title} article preview`}
                           fill
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
@@ -116,7 +127,7 @@ export default async function BlogPage() {
                       <div className="space-y-2">
                         <div className="flex items-center gap-3 text-sm text-(--text-muted)">
                           <span>{article.category}</span>
-                          <span>•</span>
+                          <span>/</span>
                           <span className="flex items-center gap-1">
                             <Clock className="w-3 h-3" />
                             {article.reading_time} min
@@ -142,7 +153,7 @@ export default async function BlogPage() {
             ) : null}
           </div>
         </PanelSection>
-        
+
         <div className="border-t border-(--border)">
           <Footer />
         </div>

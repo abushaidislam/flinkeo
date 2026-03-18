@@ -2,12 +2,19 @@ import { Frame, PanelSection } from "@/components/site/Frame";
 import { Navbar } from "@/components/site/Navbar";
 import { About } from "@/components/site/About";
 import { Footer } from "@/components/site/Footer";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "About | Flinkeo — Modern Web Systems",
+export const metadata = createPageMetadata({
+  title: "About Flinkeo",
   description:
-    "Learn more about Flinkeo’s calm, precise, and durable approach to modern web systems.",
-};
+    "Learn how Flinkeo approaches premium website design, responsive execution, and durable content systems for modern brands.",
+  path: "/about",
+  keywords: [
+    "about Flinkeo",
+    "web design studio",
+    "website development agency",
+  ],
+});
 
 export default function AboutPage() {
   return (
@@ -24,4 +31,3 @@ export default function AboutPage() {
     </Frame>
   );
 }
-

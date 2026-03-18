@@ -5,6 +5,7 @@ import { Frame, PanelSection } from "@/components/site/Frame";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { FAQAccordion } from "@/components/site/FAQAccordion";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 interface FAQ {
   id: string;
@@ -20,25 +21,50 @@ async function getFAQs(): Promise<FAQ[]> {
     .select("*")
     .eq("published", true)
     .order("order_index", { ascending: true });
-  
+
   return data || [];
 }
 
-export const metadata = {
-  title: "FAQ | Flinkeo — Frequently Asked Questions",
-  description: "Find answers to common questions about our services, process, and how we work.",
-};
+export const metadata = createPageMetadata({
+  title: "Web Design FAQ",
+  description:
+    "Find answers to common questions about Flinkeo's web design services, process, timelines, integrations, and support.",
+  path: "/faq",
+  keywords: [
+    "web design faq",
+    "custom website questions",
+    "website agency process",
+  ],
+});
 
 export default async function FAQPage() {
   const faqs = await getFAQs();
-  
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+      url: absoluteUrl("/faq"),
+    })),
+  };
+
   return (
     <Frame>
       <Navbar />
       <main>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqJsonLd),
+          }}
+        />
         <PanelSection>
           <div className="max-w-3xl mx-auto">
-            {/* Header */}
             <div className="text-center mb-16">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-(--surface) border border-(--border) mb-6">
                 <HelpCircle className="w-8 h-8 text-(--text-muted)" />
@@ -47,14 +73,13 @@ export default async function FAQPage() {
                 Frequently Asked Questions
               </h1>
               <p className="text-xl text-(--text-secondary) max-w-xl mx-auto">
-                Find answers to common questions about our services, process, and how we work.
+                Find answers to common questions about our services, process,
+                and how we work.
               </p>
             </div>
-            
-            {/* FAQ Accordion */}
+
             <FAQAccordion faqs={faqs} />
-            
-            {/* Contact CTA */}
+
             <div className="mt-16 text-center">
               <div className="bg-(--surface) border border-(--border) rounded-2xl p-8">
                 <MessageCircle className="w-10 h-10 text-(--text-muted) mx-auto mb-4" />
@@ -62,7 +87,8 @@ export default async function FAQPage() {
                   Still have questions?
                 </h2>
                 <p className="text-(--text-secondary) mb-6">
-                  Can&apos;t find the answer you&apos;re looking for? Feel free to reach out to our team.
+                  Can&apos;t find the answer you&apos;re looking for? Feel free to
+                  reach out to our team.
                 </p>
                 <Link
                   href="/contact"
@@ -74,7 +100,7 @@ export default async function FAQPage() {
             </div>
           </div>
         </PanelSection>
-        
+
         <div className="border-t border-(--border)">
           <Footer />
         </div>

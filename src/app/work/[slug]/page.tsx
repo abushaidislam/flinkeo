@@ -2,10 +2,17 @@ import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Github, Calendar, Clock } from "lucide-react";
+import {
+  ArrowLeft,
+  ExternalLink,
+  Github,
+  Calendar,
+  Clock,
+} from "lucide-react";
 import { Frame, PanelSection } from "@/components/site/Frame";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 interface Work {
   id: string;
@@ -34,41 +41,71 @@ async function getWork(slug: string): Promise<Work | null> {
     .eq("slug", slug)
     .eq("published", true)
     .single();
-  
+
   return data;
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const work = await getWork(slug);
-  
+
   if (!work) {
-    return {
-      title: "Work Not Found | Flinkeo",
-    };
+    return createPageMetadata({
+      title: "Project Not Found",
+      description: "The project you are looking for is no longer available.",
+      path: `/work/${slug}`,
+    });
   }
-  
-  return {
-    title: `${work.title} | Flinkeo`,
+
+  return createPageMetadata({
+    title: work.title,
     description: work.description,
-  };
+    path: `/work/${slug}`,
+    keywords: [...(work.services || []), ...(work.technologies || [])],
+  });
 }
 
-export default async function WorkDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function WorkDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const work = await getWork(slug);
-  
+
   if (!work) {
     notFound();
   }
-  
+
+  const caseStudyJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: work.title,
+    description: work.description,
+    url: absoluteUrl(`/work/${slug}`),
+    image: work.cover_image,
+    provider: {
+      "@type": "ProfessionalService",
+      name: "Flinkeo",
+    },
+  };
+
   return (
     <Frame>
       <Navbar />
       <main>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(caseStudyJsonLd),
+          }}
+        />
         <PanelSection>
           <div className="max-w-4xl mx-auto">
-            {/* Back Link */}
             <Link
               href="/work"
               className="inline-flex items-center gap-2 text-sm text-(--text-muted) hover:text-(--text-primary) transition-colors mb-8"
@@ -76,8 +113,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
               <ArrowLeft className="w-4 h-4" />
               Back to all work
             </Link>
-            
-            {/* Header */}
+
             <div className="mb-12">
               <div className="flex items-center gap-3 text-sm text-(--text-muted) mb-4">
                 <span className="px-3 py-1 rounded-full bg-(--surface) border border-(--border)">
@@ -85,24 +121,26 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
                 </span>
                 {work.client && <span>for {work.client}</span>}
               </div>
-              
+
               <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-(--text-primary) mb-4">
                 {work.title}
               </h1>
-              
+
               <p className="text-xl text-(--text-secondary)">
                 {work.description}
               </p>
-              
-              {/* Meta */}
+
               <div className="flex flex-wrap items-center gap-6 mt-6 text-sm text-(--text-muted)">
                 {work.completion_date && (
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    {new Date(work.completion_date).toLocaleDateString('en-US', { 
-                      month: 'long', 
-                      year: 'numeric' 
-                    })}
+                    {new Date(work.completion_date).toLocaleDateString(
+                      "en-US",
+                      {
+                        month: "long",
+                        year: "numeric",
+                      },
+                    )}
                   </div>
                 )}
                 {work.duration && (
@@ -112,8 +150,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
                   </div>
                 )}
               </div>
-              
-              {/* Links */}
+
               <div className="flex flex-wrap items-center gap-4 mt-6">
                 {work.website_url && (
                   <a
@@ -139,21 +176,18 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
                 )}
               </div>
             </div>
-            
-            {/* Cover Image */}
+
             <div className="relative aspect-video rounded-2xl overflow-hidden mb-12">
               <Image
                 src={work.cover_image}
-                alt={work.title}
+                alt={`${work.title} project cover`}
                 fill
                 className="object-cover"
                 priority
               />
             </div>
-            
-            {/* Content Grid */}
+
             <div className="grid md:grid-cols-3 gap-12">
-              {/* Main Content */}
               <div className="md:col-span-2 space-y-10">
                 {work.challenge && (
                   <div>
@@ -165,7 +199,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
                     </p>
                   </div>
                 )}
-                
+
                 {work.solution && (
                   <div>
                     <h2 className="text-xl font-semibold text-(--text-primary) mb-3">
@@ -176,7 +210,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
                     </p>
                   </div>
                 )}
-                
+
                 {work.results && (
                   <div>
                     <h2 className="text-xl font-semibold text-(--text-primary) mb-3">
@@ -187,8 +221,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
                     </p>
                   </div>
                 )}
-                
-                {/* Gallery */}
+
                 {work.gallery_images && work.gallery_images.length > 0 && (
                   <div>
                     <h2 className="text-xl font-semibold text-(--text-primary) mb-4">
@@ -202,7 +235,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
                         >
                           <Image
                             src={image}
-                            alt={`${work.title} - Image ${index + 1}`}
+                            alt={`${work.title} project screenshot ${index + 1}`}
                             fill
                             className="object-cover hover:scale-105 transition-transform duration-500"
                           />
@@ -212,8 +245,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
                   </div>
                 )}
               </div>
-              
-              {/* Sidebar */}
+
               <div className="space-y-8">
                 {work.services && work.services.length > 0 && (
                   <div>
@@ -222,17 +254,14 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
                     </h3>
                     <ul className="space-y-2">
                       {work.services.map((service, index) => (
-                        <li
-                          key={index}
-                          className="text-(--text-secondary)"
-                        >
+                        <li key={index} className="text-(--text-secondary)">
                           {service}
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
-                
+
                 {work.technologies && work.technologies.length > 0 && (
                   <div>
                     <h3 className="text-sm font-medium text-(--text-muted) uppercase tracking-wider mb-3">
@@ -254,7 +283,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
             </div>
           </div>
         </PanelSection>
-        
+
         <div className="border-t border-(--border)">
           <Footer />
         </div>

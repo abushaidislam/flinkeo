@@ -29,17 +29,17 @@ export function Navbar() {
             </Link>
 
             <nav className="hidden md:flex items-center gap-5">
-              {links.map((l) => (
+              {links.map((link) => (
                 <Link
-                  key={l.href}
-                  href={l.href}
+                  key={link.href}
+                  href={link.href}
                   className={cn(
                     "text-[12px] tracking-[0.14em] uppercase",
                     "text-(--textSecondary) hover:text-(--text)",
                     "transition-colors decoration-[color:var(--accent)] underline-offset-[8px] hover:underline",
                   )}
                 >
-                  {l.label}
+                  {link.label}
                 </Link>
               ))}
             </nav>
@@ -51,7 +51,7 @@ export function Navbar() {
               variant="secondary"
               className="hidden sm:inline-flex"
             >
-              Request a Review
+              Start a Project
             </ButtonLink>
             <ButtonLink href="/contact" variant="primary" className="sm:hidden">
               Contact
@@ -62,4 +62,3 @@ export function Navbar() {
     </header>
   );
 }
-

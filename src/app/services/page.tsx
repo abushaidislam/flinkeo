@@ -2,12 +2,20 @@ import { Frame, PanelSection } from "@/components/site/Frame";
 import { Navbar } from "@/components/site/Navbar";
 import { Services } from "@/components/site/Services";
 import { Footer } from "@/components/site/Footer";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Services | Flinkeo — Modern Web Systems",
+export const metadata = createPageMetadata({
+  title: "Website Design & Development Services",
   description:
-    "Explore Flinkeo’s focused menu of services for premium websites, documentation systems, and product showcases.",
-};
+    "Explore Flinkeo's services for portfolio websites, company sites, documentation systems, and product showcases built with precise structure and responsive execution.",
+  path: "/services",
+  keywords: [
+    "website design services",
+    "portfolio website design",
+    "documentation site development",
+    "product showcase website design",
+  ],
+});
 
 export default function ServicesPage() {
   return (
@@ -24,4 +32,3 @@ export default function ServicesPage() {
     </Frame>
   );
 }
-

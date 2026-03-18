@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { createClient } from "@supabase/supabase-js";
 import { absoluteUrl } from "@/lib/seo";
+import { servicePages } from "@/lib/service-pages";
 
 function getSupabasePublicClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -51,6 +52,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
     {
+      url: absoluteUrl("/process"),
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: absoluteUrl("/faq"),
       lastModified: now,
       changeFrequency: "monthly",
@@ -82,6 +89,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     })) || [];
 
+  const serviceEntries = servicePages.map((service) => ({
+    url: absoluteUrl(`/services/${service.slug}`),
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.85,
+  }));
+
   const workEntries =
     worksResult.data?.map((work) => ({
       url: absoluteUrl(`/work/${work.slug}`),
@@ -90,5 +104,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     })) || [];
 
-  return [...staticRoutes, ...articleEntries, ...workEntries];
+  return [...staticRoutes, ...serviceEntries, ...articleEntries, ...workEntries];
 }

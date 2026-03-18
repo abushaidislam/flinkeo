@@ -1,4 +1,4 @@
-import { ButtonLink, Card } from "@/components/site/Primitives";
+import { ButtonLink, Card, InlineLink } from "@/components/site/Primitives";
 import { ContactForm } from "@/components/site/ContactForm";
 
 export function FinalCta() {
@@ -13,12 +13,17 @@ export function FinalCta() {
             <div className="text-[22px] leading-tight font-semibold tracking-[-0.02em] uppercase text-[color:var(--accent)] sm:text-[26px]">
               Build something
               <br />
-              quiet and exact
+              clear and exact
             </div>
             <div className="max-w-[60ch] text-[14px] leading-relaxed text-[color:var(--textSecondary)]">
-              If you’re looking for a premium homepage, a portfolio archive, or a
-              documentation system—send a short brief. We’ll respond with a
-              structured plan.
+              If you need a premium homepage, portfolio website, company site,
+              or documentation system, send a short brief. We will respond with
+              a structured plan.
+            </div>
+            <div className="text-[13px] text-[color:var(--textSecondary)]">
+              Need more detail first?{" "}
+              <InlineLink href="/services">Review services</InlineLink> or{" "}
+              <InlineLink href="/process">see the process</InlineLink>.
             </div>
           </div>
 
@@ -41,9 +46,8 @@ export function FinalCta() {
       <ContactForm />
 
       <div className="grid gap-2 text-[11px] tracking-[0.22em] uppercase text-[color:var(--textMuted)]">
-        Response time: typically within 1–2 business days.
+        Response time: typically within 1-2 business days.
       </div>
     </div>
   );
 }
-

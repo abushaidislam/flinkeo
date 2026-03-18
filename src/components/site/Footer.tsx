@@ -2,10 +2,12 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "#work", label: "Work" },
-  { href: "#services", label: "Services" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  { href: "/work", label: "Work" },
+  { href: "/services", label: "Services" },
+  { href: "/process", label: "Process" },
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Footer() {
@@ -17,7 +19,8 @@ export function Footer() {
             FLINKEO
           </div>
           <div className="max-w-[62ch] text-[13px] leading-relaxed text-[color:var(--textSecondary)]">
-            A modern web studio building calm, precise, premium digital systems.
+            A premium web design studio building portfolio websites, company
+            sites, documentation systems, and product showcases.
           </div>
           <div className="text-[12px] text-[color:var(--textSecondary)]">
             <span className="text-[color:var(--textMuted)]">Email</span>{" "}
@@ -27,16 +30,16 @@ export function Footer() {
 
         <div className="grid gap-6 md:justify-self-end">
           <div className="grid grid-cols-2 gap-x-10 gap-y-3">
-            {links.map((l) => (
+            {links.map((link) => (
               <Link
-                key={l.href}
-                href={l.href}
+                key={link.href}
+                href={link.href}
                 className={cn(
                   "text-[12px] tracking-[0.14em] uppercase",
                   "text-[color:var(--textSecondary)] hover:text-[color:var(--text)] transition-colors",
                 )}
               >
-                {l.label}
+                {link.label}
               </Link>
             ))}
           </div>
@@ -46,7 +49,7 @@ export function Footer() {
               Instagram / X / GitHub
             </div>
             <div className="text-[11px] tracking-[0.22em] uppercase text-[color:var(--textMuted)]">
-              © {new Date().getFullYear()} Flinkeo. All rights reserved.
+              Copyright {new Date().getFullYear()} Flinkeo. All rights reserved.
             </div>
           </div>
         </div>
@@ -54,4 +57,3 @@ export function Footer() {
     </footer>
   );
 }
-

@@ -3,6 +3,8 @@ import { Frame, PanelSection } from "@/components/site/Frame";
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
 import { FeaturedWork } from "@/components/site/FeaturedWork";
+import { Services } from "@/components/site/Services";
+import { About } from "@/components/site/About";
 import { Ecosystem } from "@/components/site/Ecosystem";
 import { TestimonialsSection } from "@/components/site/Testimonials";
 import { FinalCta } from "@/components/site/FinalCta";
@@ -65,6 +67,14 @@ export default async function Home() {
 
         <PanelSection>
           <FeaturedWork />
+        </PanelSection>
+
+        <PanelSection>
+          <Services />
+        </PanelSection>
+
+        <PanelSection>
+          <About />
         </PanelSection>
 
         <PanelSection>

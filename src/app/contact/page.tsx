@@ -1,6 +1,6 @@
 import { Frame, PanelSection } from "@/components/site/Frame";
 import { Navbar } from "@/components/site/Navbar";
-import { FinalCta } from "@/components/site/FinalCta";
+import { ContactForm } from "@/components/site/ContactForm";
 import { Footer } from "@/components/site/Footer";
 import { createPageMetadata } from "@/lib/seo";
 
@@ -21,8 +21,8 @@ export default function ContactPage() {
     <Frame>
       <Navbar />
       <main>
-        <PanelSection>
-          <FinalCta />
+        <PanelSection className="bg-[linear-gradient(180deg,rgba(252,250,246,0.92),rgba(246,243,236,0.78))]">
+          <ContactForm />
         </PanelSection>
         <div className="border-t border-[color:var(--border)]">
           <Footer />
